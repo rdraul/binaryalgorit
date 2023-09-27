@@ -1,60 +1,94 @@
 
+# import random
+# import time
+# import threading
+# from memory_profiler import profile, memory_usage
+
+# # ... Todas las funciones del algoritmo aquí
+
+# # Generar un arreglo aleatorio
+# arreglo = [random.randint(1, 1000) for _ in range(10000)]
+
+# # Función para medir el consumo de memoria
+# def medir_memoria():
+#     # Crear una función vacía para medir la memoria
+#     pass
+
+# # Crear hilos para ejecutar los algoritmos de manera simultánea
+# threads = []
+
+# # Decorar la función de medición de memoria con @profile
+# @profile
+# def medir_memoria():
+#     for _ in range(10):
+#         # Búsqueda Secuencial
+#         thread_secuencial = threading.Thread(target=lambda: print("Tiempo de Búsqueda Secuencial:", busqueda_secuencial(arreglo, random.randint(1, 1000))))
+#         thread_secuencial.start()
+#         threads.append(thread_secuencial)
+
+#         # Búsqueda Binaria (requiere un arreglo ordenado)
+#         arreglo_ordenado = sorted(arreglo)
+#         thread_binaria = threading.Thread(target=lambda: print("Tiempo de Búsqueda Binaria:", busqueda_binaria(arreglo_ordenado, random.randint(1, 1000))))
+#         thread_binaria.start()
+#         threads.append(thread_binaria)
+
+#         # Algoritmo de Ordenamiento de la Burbuja
+#         arreglo_burbuja = arreglo.copy()
+#         thread_burbuja = threading.Thread(target=lambda: print("Tiempo de Burbuja:", burbuja(arreglo_burbuja)))
+#         thread_burbuja.start()
+#         threads.append(thread_burbuja)
+
+#         # Quick Sort
+#         arreglo_quick = arreglo.copy()
+#         thread_quick = threading.Thread(target=lambda: print("Tiempo de Quick Sort:", quick_sort(arreglo_quick)))
+#         thread_quick.start()
+#         threads.append(thread_quick)
+
+#         # Método de Inserción
+#         arreglo_insercion = arreglo.copy()
+#         thread_insercion = threading.Thread(target=lambda: print("Tiempo de Inserción:", insercion(arreglo_insercion)))
+#         thread_insercion.start()
+#         threads.append(thread_insercion)
+
+#     # Esperar a que todos los hilos finalicen
+#     for thread in threads:
+#         thread.join()
+
+# if __name__ == "__main__":
+#     # Utilizar memory_usage para medir el consumo de memoria
+#     mem_usage = memory_usage(medir_memoria)
+#     print("Consumo de memoria (en MB):", max(mem_usage))
 import random
 import time
 import threading
-from memory_profiler import profile, memory_usage
+import psutil
 
-# ... Todas las funciones del algoritmo aquí
+# Resto del código...
 
-# Generar un arreglo aleatorio
-arreglo = [random.randint(1, 1000) for _ in range(10000)]
+if __name__ == '__main__':
+    # Generar un arreglo aleatorio
+    arreglo = [random.randint(1, 1000) for _ in range(10000)]
 
-# Función para medir el consumo de memoria
-def medir_memoria():
-    # Crear una función vacía para medir la memoria
-    pass
+    # Búsqueda Secuencial
+    memoria_secuencial = psutil.Process().memory_info().rss / 1024 / 1024  # En MB
+    print("Consumo de memoria de Búsqueda Secuencial:", memoria_secuencial, "MB")
 
-# Crear hilos para ejecutar los algoritmos de manera simultánea
-threads = []
+    # Búsqueda Binaria (requiere un arreglo ordenado)
+    arreglo_ordenado = sorted(arreglo)
+    memoria_binaria = psutil.Process().memory_info().rss / 1024 / 1024  # En MB
+    print("Consumo de memoria de Búsqueda Binaria:", memoria_binaria, "MB")
 
-# Decorar la función de medición de memoria con @profile
-@profile
-def medir_memoria():
-    for _ in range(10):
-        # Búsqueda Secuencial
-        thread_secuencial = threading.Thread(target=lambda: print("Tiempo de Búsqueda Secuencial:", busqueda_secuencial(arreglo, random.randint(1, 1000))))
-        thread_secuencial.start()
-        threads.append(thread_secuencial)
+    # Algoritmo de Ordenamiento de la Burbuja
+    arreglo_burbuja = arreglo.copy()
+    memoria_burbuja = psutil.Process().memory_info().rss / 1024 / 1024  # En MB
+    print("Consumo de memoria de Burbuja:", memoria_burbuja, "MB")
 
-        # Búsqueda Binaria (requiere un arreglo ordenado)
-        arreglo_ordenado = sorted(arreglo)
-        thread_binaria = threading.Thread(target=lambda: print("Tiempo de Búsqueda Binaria:", busqueda_binaria(arreglo_ordenado, random.randint(1, 1000))))
-        thread_binaria.start()
-        threads.append(thread_binaria)
+    # Quick Sort
+    arreglo_quick = arreglo.copy()
+    memoria_quick = psutil.Process().memory_info().rss / 1024 / 1024  # En MB
+    print("Consumo de memoria de Quick Sort:", memoria_quick, "MB")
 
-        # Algoritmo de Ordenamiento de la Burbuja
-        arreglo_burbuja = arreglo.copy()
-        thread_burbuja = threading.Thread(target=lambda: print("Tiempo de Burbuja:", burbuja(arreglo_burbuja)))
-        thread_burbuja.start()
-        threads.append(thread_burbuja)
-
-        # Quick Sort
-        arreglo_quick = arreglo.copy()
-        thread_quick = threading.Thread(target=lambda: print("Tiempo de Quick Sort:", quick_sort(arreglo_quick)))
-        thread_quick.start()
-        threads.append(thread_quick)
-
-        # Método de Inserción
-        arreglo_insercion = arreglo.copy()
-        thread_insercion = threading.Thread(target=lambda: print("Tiempo de Inserción:", insercion(arreglo_insercion)))
-        thread_insercion.start()
-        threads.append(thread_insercion)
-
-    # Esperar a que todos los hilos finalicen
-    for thread in threads:
-        thread.join()
-
-if __name__ == "__main__":
-    # Utilizar memory_usage para medir el consumo de memoria
-    mem_usage = memory_usage(medir_memoria)
-    print("Consumo de memoria (en MB):", max(mem_usage))
+    # Método de Inserción
+    arreglo_insercion = arreglo.copy()
+    memoria_insercion = psutil.Process().memory_info().rss / 1024 / 1024  # En MB
+    print("Consumo de memoria de Inserción:", memoria_insercion, "MB")
